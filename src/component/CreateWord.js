@@ -1,4 +1,6 @@
+import useFetch from "../hooks/useFetch";
 export default function CreateWord() {
+  const days = useFetch("http:.//localhost:3001/days");
   return (
     <form>
       <div className="input_area">
@@ -12,6 +14,11 @@ export default function CreateWord() {
       <div className="input_area">
         <label>Day</label>
         <select>
+          {days.map((day) => (
+            <option key={day.id} value={day.day}>
+              1
+            </option>
+          ))}
           <option>1</option>
           <option>2</option>
         </select>
