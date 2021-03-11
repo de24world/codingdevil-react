@@ -1,10 +1,29 @@
-import { useRef } from "react";
+import { useRef, useHistory } from "react";
 import useFetch from "../hooks/useFetch";
 export default function CreateWord() {
   const days = useFetch("http:.//localhost:3001/days");
+  const history = useHistory();
 
   function onSubmit(e) {
     e.preventDefault();
+
+    fetch(`http://localhost:3001/words/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        day: dayRef.current.value,
+        eng: engRef.current.value,
+        kor: korRef.current.value,
+        isDone: false
+      })
+    }).then((res) => {
+      if (res.ok) {
+        alert("created completed");
+        history.push(`/day/${dayRef.current.value}`);
+      }
+    });
   }
 
   const engRef = useRef(null);
